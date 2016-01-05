@@ -1,0 +1,39 @@
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <title>Image Size Calculator</title>
+      <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+      <!-- Auth0Lock script -->
+      <script src="https://cdn.auth0.com/js/lock-7.12.min.js"></script>
+      <!-- Setting the right viewport -->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    </head>
+    <body>
+      <h1>Authenticate with Auth0!</h1>
+      <button id="login">Login</button>
+      <div class="container">
+        <app></app>
+      </div>
+      <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
+      <script src="../build/common.js"></script>
+      <script src="../build/angular2.js"></script>
+      <script src="../build/app.js"></script>
+
+      <script>
+        var lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
+        window.electron = {};
+        document.getElementById('login').addEventListener('click', function() {
+          lock.show(function(err, profile, token) {
+            if (err) {
+              // Error callback
+              console.error("Something went wrong: ", err);
+            } else {
+              // Success calback. Save the profile and JWT token.
+              localStorage.setItem('profile', JSON.stringify(profile));
+              localStorage.setItem('id_token', token);
+            }
+          });
+        });
+      </script>
+    </body>
+  </html>
